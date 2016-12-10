@@ -1,7 +1,7 @@
 
-extends KinematicBody2D
+extends RigidBody2D
 
-const WALK_SPEED = 200
+const FLY_SPEED = 2000
 var velocity = Vector2()
 var decceleration = 50
 
@@ -12,13 +12,15 @@ func _ready():
 
 func _fixed_process(delta):
 	if(Input.is_action_pressed("ui_right")):
-		velocity.x = WALK_SPEED
+		velocity.x = FLY_SPEED
+		rotate(-0.1)
 	elif(Input.is_action_pressed("ui_left")):
-		velocity.x = - WALK_SPEED
+		velocity.x = - FLY_SPEED
+		rotate(0.1)
 	elif(Input.is_action_pressed("ui_up")):
-		velocity.y = - WALK_SPEED
+		velocity.y = - FLY_SPEED
 	elif(Input.is_action_pressed("ui_down")):
-		velocity.y = WALK_SPEED
+		velocity.y = FLY_SPEED
 	else:
 		if(velocity.x > 0):
 			velocity.x -= (decceleration * delta)
@@ -34,10 +36,11 @@ func _fixed_process(delta):
 			velocity.y = 0
 
 	var motion = velocity * delta
-	move(motion)
+	set_linear_velocity(motion)
 	
-	if(is_colliding()):
-		var n = get_collision_normal()
-		motion = n.slide(motion)
-		velocity = n.slide(velocity)
-		move(motion)
+#	if(is_colliding()):
+#		var n = get_collision_normal()
+#		motion = n.slide(motion)
+#		velocity = n.slide(velocity)
+#		move(motion)
+#
