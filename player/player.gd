@@ -1,6 +1,8 @@
 
 extends RigidBody2D
 
+# --- Player properties
+var direction
 
 # Create engine and boosters
 class BackEngine:
@@ -47,6 +49,11 @@ func _ready():
 
 
 func _fixed_process(delta):
+	var cur_x
+	var cur_y
+	var temp_x
+	var temp_y
+	get_node("label").set_text(str(get_rotd()))
 	if(Input.is_action_pressed("ui_up")):
 		back_engine.emitter.set_emitting(true)
 		apply_impulse(back_engine.pos, back_engine.thrust)

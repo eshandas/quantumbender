@@ -155,4 +155,18 @@ params/hue_variation = 0.0
 params/anim_speed_scale = 1.0
 params/anim_initial_pos = 0.0
 
+[node name="label" type="Label" parent="."]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 5.0
+margin/top = 33.0
+margin/right = 45.0
+margin/bottom = 47.0
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
 
