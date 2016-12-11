@@ -18,12 +18,12 @@ transform/pos = Vector2( 820.116, 513.27 )
 
 [node name="asteroid" parent="." instance=ExtResource( 3 )]
 
-transform/pos = Vector2( 251.056, 58.5798 )
+transform/pos = Vector2( 337.531, 30.6847 )
 bounce = 0.3
 velocity/linear = Vector2( 0, 0 )
 
 [node name="player" parent="." instance=ExtResource( 4 )]
 
-transform/pos = Vector2( 306.846, 270.582 )
+transform/pos = Vector2( 1737.86, 253.845 )
 
 
