@@ -1,42 +1,48 @@
 
 extends RigidBody2D
 
+
+# Create engine and boosters
 class BackEngine:
-	var pos = Vector2(0, -15)
+	var pos = null
 	var thrust = Vector2(0, -10)
 	var emitter = null
 
 
 class FrontBooster:
-	var pos = Vector2(0, 15)
+	var pos = null
 	var thrust = Vector2(0, 2)
 	var emitter = null
 
 
 class RightBooster:
-	var pos = Vector2(15, 6)
+	var pos = null
 	var thrust = Vector2(-2, 0)
 	var emitter = null
 
 
 class LeftBooster:
-	var pos = Vector2(-15, 6)
+	var pos = null
 	var thrust = Vector2(2, 0)
 	var emitter = null
 
 
+# Instantiate engine and boosters
 var back_engine = BackEngine.new()
 var front_booster = FrontBooster.new()
 var right_booster = RightBooster.new()
 var left_booster = LeftBooster.new()
 
 func _ready():
-	# Called every time the node is added to the scene.
-	# Initialization here
+	# Get all the emitters and assign to engines
 	back_engine.emitter = get_node("back_engine")
+	back_engine.pos = back_engine.emitter.get_pos()
 	front_booster.emitter = get_node("front_booster")
+	front_booster.pos = front_booster.emitter.get_pos()
 	right_booster.emitter = get_node("right_booster")
+	right_booster.pos = right_booster.emitter.get_pos()
 	left_booster.emitter = get_node("left_booster")
+	left_booster.pos = left_booster.emitter.get_pos()
 	set_fixed_process(true)
 
 
