@@ -56,14 +56,15 @@ func _fixed_process(delta):
 	elif(Input.is_action_pressed("ui_down")):
 		front_booster.emitter.set_emitting(true)
 		apply_impulse(Vector2(0, 0), Vector2(-new_x, -new_y))
-	elif(Input.is_action_pressed("ui_left")):
+	else:
+		back_engine.emitter.set_emitting(false)
+		front_booster.emitter.set_emitting(false)
+	if(Input.is_action_pressed("ui_left")):
 		right_booster.emitter.set_emitting(true)
 		apply_impulse(right_booster.pos, right_booster.thrust)
 	elif(Input.is_action_pressed("ui_right")):
 		left_booster.emitter.set_emitting(true)
 		apply_impulse(left_booster.pos, left_booster.thrust)
 	else:
-		back_engine.emitter.set_emitting(false)
-		front_booster.emitter.set_emitting(false)
 		right_booster.emitter.set_emitting(false)
 		left_booster.emitter.set_emitting(false)
