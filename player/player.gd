@@ -6,25 +6,25 @@ var direction
 
 # Create engine and boosters
 class BackEngine:
-	var pos = null
-	var thrust = Vector2(0, -10)
+	var pos = Vector2(0, 0)  # Acts on the centre of mass
+	var thrust = Vector2(0, -2)
 	var emitter = null
 
 
 class FrontBooster:
-	var pos = null
-	var thrust = Vector2(0, 10)
+	var pos = Vector2(0, 0)  # Acts on the centre of mass
+	var thrust = Vector2(0, 2)
 	var emitter = null
 
 
 class RightBooster:
-	var pos = null
+	var pos = Vector2(0, -15)  # Upper Y Axis
 	var thrust = Vector2(-2, 0)
 	var emitter = null
 
 
 class LeftBooster:
-	var pos = null
+	var pos = Vector2(0, -15)  # Upper Y Axis
 	var thrust = Vector2(2, 0)
 	var emitter = null
 
@@ -36,36 +36,26 @@ var right_booster = RightBooster.new()
 var left_booster = LeftBooster.new()
 
 func _ready():
-	set_rotd(90)
-	var alpha = get_rot()
+#	set_rotd(-90)
 	# Get all the emitters and assign to engines
 	back_engine.emitter = get_node("back_engine")
-	back_engine.pos = back_engine.emitter.get_pos()
 	front_booster.emitter = get_node("front_booster")
-	front_booster.pos = front_booster.emitter.get_pos()
 	right_booster.emitter = get_node("right_booster")
-	right_booster.pos = right_booster.emitter.get_pos()
 	left_booster.emitter = get_node("left_booster")
-	left_booster.pos = left_booster.emitter.get_pos()
-	
-	var new_x = (back_engine.thrust.x * cos(alpha)) + (back_engine.thrust.y * sin(alpha))
-	var new_y = (-back_engine.thrust.x * sin(alpha)) + (back_engine.thrust.y * cos(alpha))
-	back_engine.thrust = Vector2(new_x, new_y)
 	set_fixed_process(true)
 
 
 func _fixed_process(delta):
-	var alpha = get_rotd()
-#	var new_x = (back_engine.thrust.x * cos(alpha)) + (back_engine.thrust.y * sin(alpha))
-#	var new_y = (-back_engine.thrust.x * sin(alpha)) + (back_engine.thrust.y * cos(alpha))
-	get_node("label").set_text("%s, %s, %s" % [alpha, sin(get_rot()), back_engine.thrust])
+	var alpha = get_rot()
+	var new_x = (back_engine.thrust.x * cos(alpha)) + (back_engine.thrust.y * sin(alpha))
+	var new_y = (-back_engine.thrust.x * sin(alpha)) + (back_engine.thrust.y * cos(alpha))
+	get_node("label").set_text("%s, %s, %s" % [get_rotd(), sin(alpha), back_engine.thrust])
 	if(Input.is_action_pressed("ui_up")):
 		back_engine.emitter.set_emitting(true)
-		
-		apply_impulse(Vector2(0, 0), back_engine.thrust)
+		apply_impulse(back_engine.pos, Vector2(new_x, new_y))
 	elif(Input.is_action_pressed("ui_down")):
 		front_booster.emitter.set_emitting(true)
-		apply_impulse(front_booster.pos, front_booster.thrust)
+		apply_impulse(Vector2(0, 0), Vector2(-new_x, -new_y))
 	elif(Input.is_action_pressed("ui_left")):
 		right_booster.emitter.set_emitting(true)
 		apply_impulse(right_booster.pos, right_booster.thrust)
