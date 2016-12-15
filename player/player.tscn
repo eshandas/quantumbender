@@ -33,17 +33,6 @@ damp_override/linear = -1.0
 damp_override/angular = -1.0
 script/script = ExtResource( 1 )
 
-[node name="Sprite" type="Sprite" parent="."]
-
-transform/scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 2 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-
-shape = SubResource( 1 )
-trigger = false
-_update_shape_index = 0
-
 [node name="Camera2D" type="Camera2D" parent="."]
 
 anchor_mode = 1
@@ -63,6 +52,17 @@ drag_margin/top = 0.2
 drag_margin/right = 0.2
 drag_margin/bottom = 0.2
 
+[node name="Sprite" type="Sprite" parent="."]
+
+transform/scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
 [node name="back_engine" type="Particles2D" parent="."]
 
 transform/pos = Vector2( 0, 30 )
@@ -74,7 +74,7 @@ params/linear_velocity = 20.0
 params/spin_velocity = 0.0
 params/orbit_velocity = 0.0
 params/gravity_direction = 0.0
-params/gravity_strength = 9.8
+params/gravity_strength = 0.0
 params/radial_accel = 0.0
 params/tangential_accel = 0.0
 params/damping = 0.0
@@ -96,7 +96,7 @@ params/linear_velocity = 20.0
 params/spin_velocity = 0.0
 params/orbit_velocity = 0.0
 params/gravity_direction = 0.0
-params/gravity_strength = 9.8
+params/gravity_strength = 0.0
 params/radial_accel = 0.0
 params/tangential_accel = 0.0
 params/damping = 0.0
@@ -118,7 +118,7 @@ params/linear_velocity = 20.0
 params/spin_velocity = 0.0
 params/orbit_velocity = 0.0
 params/gravity_direction = 0.0
-params/gravity_strength = 9.8
+params/gravity_strength = 0.0
 params/radial_accel = 0.0
 params/tangential_accel = 0.0
 params/damping = 0.0
@@ -140,7 +140,7 @@ params/linear_velocity = 20.0
 params/spin_velocity = 0.0
 params/orbit_velocity = 0.0
 params/gravity_direction = 0.0
-params/gravity_strength = 9.8
+params/gravity_strength = 0.0
 params/radial_accel = 0.0
 params/tangential_accel = 0.0
 params/damping = 0.0
