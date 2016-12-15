@@ -35,6 +35,8 @@ var front_booster = FrontBooster.new()
 var right_booster = RightBooster.new()
 var left_booster = LeftBooster.new()
 
+var eyes
+
 func _ready():
 #	set_rotd(-90)
 	# Get all the emitters and assign to engines
@@ -42,14 +44,17 @@ func _ready():
 	front_booster.emitter = get_node("front_booster")
 	right_booster.emitter = get_node("right_booster")
 	left_booster.emitter = get_node("left_booster")
+	
+	eyes = get_node("RayCast2D")
+	eyes.add_exception(self)
 	set_fixed_process(true)
 
 
 func _fixed_process(delta):
 	var alpha = get_rot()
+	var pos = get_pos()
 	var new_x = (back_engine.thrust.x * cos(alpha)) + (back_engine.thrust.y * sin(alpha))
 	var new_y = (-back_engine.thrust.x * sin(alpha)) + (back_engine.thrust.y * cos(alpha))
-	get_node("label").set_text("%s, %s, %s" % [get_rotd(), sin(alpha), back_engine.thrust])
 	if(Input.is_action_pressed("ui_up")):
 		back_engine.emitter.set_emitting(true)
 		apply_impulse(back_engine.pos, Vector2(new_x, new_y))
@@ -68,3 +73,9 @@ func _fixed_process(delta):
 	else:
 		right_booster.emitter.set_emitting(false)
 		left_booster.emitter.set_emitting(false)
+	
+	# --- Ray casting
+	if eyes.is_colliding():
+		get_node("label").set_text("%s" % eyes.get_collider())
+	else:
+		get_node("label").set_text("")
