@@ -1,8 +1,12 @@
 
 extends RigidBody2D
 
+var world
+
 # --- Player properties
 var direction
+var alpha
+var prev_shooting = false
 
 # Create engine and boosters
 class BackEngine:
@@ -35,15 +39,20 @@ var front_booster = FrontBooster.new()
 var right_booster = RightBooster.new()
 var left_booster = LeftBooster.new()
 
+var cannons = []
+
 var eyes
 
 func _ready():
-#	set_rotd(-90)
+	world = get_tree().get_root().get_node("world")
 	# Get all the emitters and assign to engines
 	back_engine.emitter = get_node("back_engine")
 	front_booster.emitter = get_node("front_booster")
 	right_booster.emitter = get_node("right_booster")
 	left_booster.emitter = get_node("left_booster")
+	
+	cannons.append(get_node("left_cannon"))
+	cannons.append(get_node("right_cannon"))
 	
 	eyes = get_node("RayCast2D")
 	eyes.add_exception(self)
@@ -51,8 +60,7 @@ func _ready():
 
 
 func _fixed_process(delta):
-	var alpha = get_rot()
-	var pos = get_pos()
+	alpha = get_rot()
 	var new_x = (back_engine.thrust.x * cos(alpha)) + (back_engine.thrust.y * sin(alpha))
 	var new_y = (-back_engine.thrust.x * sin(alpha)) + (back_engine.thrust.y * cos(alpha))
 	if(Input.is_action_pressed("ui_up")):
@@ -74,8 +82,22 @@ func _fixed_process(delta):
 		right_booster.emitter.set_emitting(false)
 		left_booster.emitter.set_emitting(false)
 	
+	var shooting = Input.is_action_pressed("shoot")
+	_shoot_bullet(delta, shooting, Vector2(new_x, new_y))
+	
 	# --- Ray casting
 	if eyes.is_colliding():
 		get_node("label").set_text("%s" % eyes.get_collider())
 	else:
 		get_node("label").set_text("")
+
+
+func _shoot_bullet(delta, shooting, player_pos):
+	if(shooting and not prev_shooting):
+		for cannon in cannons:
+			var bullet = preload("res://bullet/bullet.tscn").instance()
+			bullet.set_rot(alpha - bullet.DEFAULT_ROT)
+			bullet.set_pos(cannon.get_global_pos())
+			bullet.set_linear_velocity(player_pos * bullet.VELOCITY)
+			world.add_child(bullet)
+	prev_shooting = shooting

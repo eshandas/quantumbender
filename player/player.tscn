@@ -159,6 +159,14 @@ params/hue_variation = 0.0
 params/anim_speed_scale = 1.0
 params/anim_initial_pos = 0.0
 
+[node name="left_cannon" type="Position2D" parent="."]
+
+transform/pos = Vector2( -13, -25 )
+
+[node name="right_cannon" type="Position2D" parent="."]
+
+transform/pos = Vector2( 13, -25 )
+
 [node name="label" type="Label" parent="."]
 
 focus/ignore_mouse = true
