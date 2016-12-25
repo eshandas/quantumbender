@@ -81,15 +81,9 @@ func _fixed_process(delta):
 	else:
 		right_booster.emitter.set_emitting(false)
 		left_booster.emitter.set_emitting(false)
-	
 	var shooting = Input.is_action_pressed("shoot")
 	_shoot_bullet(delta, shooting, Vector2(new_x, new_y))
-	
-	# --- Ray casting
-	if eyes.is_colliding():
-		get_node("label").set_text("%s" % eyes.get_collider())
-	else:
-		get_node("label").set_text("")
+	_see(delta)
 
 
 func _shoot_bullet(delta, shooting, player_pos):
@@ -101,3 +95,11 @@ func _shoot_bullet(delta, shooting, player_pos):
 			bullet.set_linear_velocity(player_pos * bullet.VELOCITY)
 			world.add_child(bullet)
 	prev_shooting = shooting
+
+
+# --- Ray casting
+func _see(delta):
+	if eyes.is_colliding():
+		get_node("label").set_text("%s" % eyes.get_collider())
+	else:
+		get_node("label").set_text("HELLO")
